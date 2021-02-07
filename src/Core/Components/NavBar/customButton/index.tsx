@@ -9,7 +9,7 @@ type Props = {
 const CustomButton = ({text}: Props) => {
 
     return(
-        <div className="content-button">
+        <div className="content-button" >
             {text}
         </div>
     );
