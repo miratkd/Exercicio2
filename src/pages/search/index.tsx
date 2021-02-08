@@ -1,19 +1,24 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
-//import { Link } from 'react-router-dom';
 import CustomButton from '../../Core/Components/NavBar/customButton';
 import { MakeRequest } from '../../Core/utils/makeRequest/makeRequest';
 import { ProductResponse } from '../../Core/utils/productResponse/productResponse';
+import ImageLoader from './components/loader';
+import InfoLoader from './components/loader/loaderInfo';
 import './styles.scss';
 
 const Search = () => {
 
     const [productResponse, setProductResponse] = useState<ProductResponse>();
     const [input, setInput] = useState<string>('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const HandleRequest = () => {
-        MakeRequest({userName: input}).then(response => setProductResponse(response.data));
-        console.log(productResponse);
+        setIsLoading(true);
+        console.log(isLoading);
+        MakeRequest({userName: input}).then(response => setProductResponse(response.data)).finally(() => {setIsLoading(false)});
+        //console.log(productResponse);
+        console.log(isLoading);
     }
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInput(event.target.value)
@@ -31,7 +36,14 @@ const Search = () => {
                 </div>
             </div>
             <div>
-                {productResponse ?
+                
+                { isLoading ? 
+                    <div className="loader-box">
+                    <div className="loader-image"><ImageLoader/></div>
+                    <div className="loader-info"><InfoLoader/></div>
+                    </div>  
+                    
+                    : productResponse ?
                     <div className="result-container">
                         <div className="col-3">
                             <img src={productResponse.avatar_url} alt="foto" className="result-image" />
@@ -68,10 +80,9 @@ const Search = () => {
                             </div>
                         </div>
                     </div>
-
-                    :
-
-                    <h1> nada </h1>}
+                    : 
+                     <div></div>
+                    }
             </div>
         </div>
     );
