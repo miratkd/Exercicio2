@@ -7,4 +7,5 @@ export type ProductResponse = {
     location: string;
     created_at: string;
     avatar_url: string;
+    html_url: string;
 }

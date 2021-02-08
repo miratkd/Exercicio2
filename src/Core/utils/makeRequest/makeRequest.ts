@@ -1,17 +1,14 @@
 import axios from "axios";
 
-/*type RequestParams = {
-    userName?: string;
-    method?: Method;
-    data?: object;
-    params?: object;
-}*/
 
-//const url = 'https://api.github.com/users/miratkd';
 
-export const MakeRequest = () => {
+type Props = {
+    userName: string
+}
+
+export const MakeRequest = ({userName}: Props) => {
 
     return(
-        axios('https://api.github.com/users/miratkd')
+        axios(`https://api.github.com/users/${userName}`)
     )
 } 
